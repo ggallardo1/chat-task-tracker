@@ -1,0 +1,19 @@
+{
+  "name": "chat-task-tracker",
+  "version": "1.0.0",
+  "description": "LLM-powered Chat Task Tracker using node, typescript, postgreSQL, express, react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typescript",
+    "nodejs",
+    "express",
+    "react",
+    "postgreSQL",
+    "gemini"
+  ],
+  "author": "Genesis Y. Gallardo",
+  "license": "ISC"
+}
