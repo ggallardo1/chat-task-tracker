@@ -35,10 +35,26 @@ This application follows a **Controller-Service-Repository** pattern with an int
 - Storage (PostgreSQL): Persists, tasks, free text details and conversation threads.
 
 ## LLM Strategy & Tooling
+- The application uses Gemini 2.5 Flash with a Function Calling (Tools) architecture. This ensures the LLM acts as a structured reasoning engine rather than just a text generator.
+- Reasoning Layer: Instead of parsing raw text with Regex, the system provides the LLM with a set of executable tools (create_tasks, complete_tasks, append_detail).
+- Context Injection (S3 & S4): For every request, the backend injects the current "Small Task-Set" (titles, IDs, and statuses) into the system prompt. This allows the LLM to map natural language (e.g., "the plumbing work") to a specific database ID ("fix the kitchen sink").
+- Strict Schema: We use a JSON schema to force the LLM to return valid arguments for our internal CommandExecutor, ensuring type safety between the AI's intent and our database operations.
 
 ## Idempotency
+To satisfy the S2 requirement, the system implements a Content Hashing strategy to ensure that duplicate requests do not result in duplicate side effects.
+
+- Hashing: Every incoming userMessage is passed through a SHA-256 hashing utility.
+- Persistence: We maintain a ProcessedMessages table in PostgreSQL that stores these unique hashes.
+- Guard Logic: Before the LLM is even invoked, the system checks if the hash already exists:
+- If Match Found: The system immediately returns a "Duplicate message ignored" response, bypassing the LLM and the Task repository entirely.
+- If New: The message is processed, and the hash is saved to prevent future duplicates.
+
+Benefit: This protects the system from network retries, double-clicks on the "Send" button, and saves unnecessary LLM API costs.
 
 ## System Reset
+- A dedicated administrative endpoint POST /admin/reset is provided to return the application to a "Clean Slate."
+- Atomic Operation: Uses a database transaction to truncate the Task, TaskDetail, and ProcessedMessage tables simultaneously.
+- Frontend Integration: Accessible via the "ADMIN RESET" button in the Web UI for rapid testing and demoing.
 
 ## Demo Path
 
