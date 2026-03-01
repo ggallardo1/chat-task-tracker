@@ -27,5 +27,5 @@ const PORT = process.env.PORT || 3000;
 
 // 4. Bind to '0.0.0.0' for Docker compatibility
 app.listen(Number(PORT), "0.0.0.0", () => {
-  console.log(`Backend running on http://0.0.0.0:${PORT}`);
+    console.log(`Backend running on http://0.0.0.0:${PORT}`);
 });
