@@ -4,7 +4,9 @@
   "description": "LLM-powered Chat Task Tracker using node, typescript, postgreSQL, express, react",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "reset": "curl -X POST http://localhost:3000/admin/reset"
   },
   "keywords": [
     "typescript",
@@ -13,6 +15,10 @@
     "react",
     "postgreSQL",
     "gemini"
+  ],
+  "workspaces": [
+    "app/backend",
+    "app/frontend"
   ],
   "author": "Genesis Y. Gallardo",
   "license": "ISC"
