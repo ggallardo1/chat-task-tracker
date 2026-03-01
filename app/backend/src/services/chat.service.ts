@@ -63,7 +63,27 @@ export async function handleChat(userMessage: string) {
             required: ["titles"]
           }
         },
-        // ... rest of your tool declarations ...
+        {
+            name: "append_detail",
+            description: "Add notes, specific items, or details to an existing task. Use this when the user says 'For the [task]...', 'Add a note to...', or provides more info about a task in the list.",
+            parameters: {
+            type: "object" as any,
+            properties: {
+                taskId: { type: "string" as any, description: "The ID from the current task list" },
+                content: { type: "string" as any, description: "The detail text to append" }
+            },
+            required: ["taskId", "content"]
+            }
+        },
+        {
+            name: "complete_tasks",
+            description: "Mark tasks as done. Match based on the provided task list.",
+            parameters: {
+            type: "object" as any,
+            properties: { ids: { type: "array" as any, items: { type: "string" as any } } },
+            required: ["ids"]
+            }
+        },
       ]
     }
   ];

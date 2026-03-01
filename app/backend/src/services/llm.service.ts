@@ -7,7 +7,9 @@ export const callLLM = async (messages: any[], tools: any[]) => {
   try {
     // FIX: Use the most standard identifier. 
     // If 'latest' fails, 'gemini-1.5-flash' is the fallback.
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    //const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+    
 
     const chat = model.startChat({
       history: messages.slice(0, -1).map(m => ({

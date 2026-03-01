@@ -8,7 +8,23 @@ This test is designed to evaluate:
 - Backend fundamentals (idempotency, persistence, correctness)
 - End-to-end wiring (chat input → LLM → actions → storage → web view)
 
+## Prerequisites
+- Docker ([download here](https://www.docker.com/products/docker-desktop/))
 
+## INSTALLATION
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ggallardo1/brighte-eats-app.git
+   cd brighte-eats-apps
+   cp .env.example .env
+
+2. **Install dependencies:**  
+Using Docker, make sure [docker desktop](https://www.docker.com/products/docker-desktop/) is installed:
+    ```bash
+    docker-compose up --build
+
+3. **Run Webui**
+Open in your browser, [http://localhost:5173/](http://localhost:5173/)
 
 ## ARCHITECTURE OVERVIEW
 This application follows a **Controller-Service-Repository** pattern with an integrated **LLM Reasoning Layer**.
@@ -26,7 +42,7 @@ This application follows a **Controller-Service-Repository** pattern with an int
 
 ## Demo Path
 
-1. Create. Type "I need to take a bath, buy groceries, and buy coffee" - Observe 3 tasks created.
-2. Complete. Type "I bought groceries" - Observe the "buy groceries" task to be moved to completed.
-3. Detail. Type "For the groceries, make sure to get bacon and eggs." - Observe the detail attached to the "Buy groceries".
-4. Idempotency. Click "Send" twice rapidly on a message - Observe that only one task/detail is generated.
+1. Create. Type "I need to buy groceries, fix the kitchen sink, and email the landlord about the lease." - Observe 3 tasks created.
+2. Complete. Type "I finished the plumbing work." - Observe the "buy groceries" task to be moved to completed.
+3. Detail. Type "For the groceries, make sure to get bacon, eggs, and almond milk." - Observe the detail attached to the "Buy groceries".
+4. Idempotency. Send the exact same message from Step 4 again: "I finished the plumbing work."  - Observe that only one task/detail is generated.
